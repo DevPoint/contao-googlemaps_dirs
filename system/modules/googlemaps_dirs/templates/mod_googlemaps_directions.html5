@@ -170,7 +170,7 @@ window.setTimeout("gmap<?php echo $this->map['id']; ?>_initialize()", 500);
 
 </script>
 
-<div class="gmap_directions_form">
+<div class="gmap_directions_form block">
 <form onsubmit="gmap<?php echo $this->map['id']; ?>_calcRoute(this.fromAddress.value); return false;" action="#">
 <div class="widget_container">
 <label for="gmap<?php echo $this->map['id']; ?>_fromAddress"><?php echo $this->labels['routingLabel'];?></label>
