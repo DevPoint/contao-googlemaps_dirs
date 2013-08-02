@@ -9,16 +9,14 @@
 
 <script>
 
-var gmap_<?php echo $this->map['id']; ?>_directionsDisplay;
-var gmap_<?php echo $this->map['id']; ?>_directionsService = new google.maps.DirectionsService();
+var gmap<?php echo $this->map['id']; ?>_directionsDisplay;
+var gmap<?php echo $this->map['id']; ?>_directionsService = new google.maps.DirectionsService();
 
 function gmap<?php echo $this->map['id']; ?>_initialize() {
 	var gmap<?php echo $this->map['id']; ?>_Options = {
 		zoom: <?php echo $this->map['zoom']; ?>
 		, center: new google.maps.LatLng(<?php echo $this->map['center']; ?>)
-
 		, mapTypeId: google.maps.MapTypeId.<?php echo $this->map['mapTypeId']; ?>
-
 		, draggable: <?php echo $this->map['draggable']; ?>
 		, disableDoubleClickZoom: <?php echo $this->map['disableDoubleClickZoom']; ?>
 		, scrollwheel: <?php echo $this->map['scrollwheel']; ?>
@@ -67,9 +65,9 @@ function gmap<?php echo $this->map['id']; ?>_initialize() {
     };
     var gmap<?php echo $this->map['id']; ?> = new google.maps.Map(document.getElementById("dlh_googlemap_<?php echo $this->map['id']; ?>"), gmap<?php echo $this->map['id']; ?>_Options);
 
-	gmap_<?php echo $this->map['id']; ?>_directionsDisplay = new google.maps.DirectionsRenderer();
-	gmap_<?php echo $this->map['id']; ?>_directionsDisplay.setMap(gmap<?php echo $this->map['id']; ?>);
-  	gmap_<?php echo $this->map['id']; ?>_directionsDisplay.setPanel(document.getElementById("gmap<?php echo $this->map['id']; ?>_directions_panel"));
+	gmap<?php echo $this->map['id']; ?>_directionsDisplay = new google.maps.DirectionsRenderer();
+	gmap<?php echo $this->map['id']; ?>_directionsDisplay.setMap(gmap<?php echo $this->map['id']; ?>);
+  	gmap<?php echo $this->map['id']; ?>_directionsDisplay.setPanel(document.getElementById("gmap<?php echo $this->map['id']; ?>_directions_panel"));
 
 	<?php $count=-1; foreach($this->map['elements'] AS $element) : $count++; $element['id']=$this->map['id'].'_'.$count; switch($element['type']) :
 
@@ -85,8 +83,7 @@ function gmap<?php echo $this->map['id']; ?>_initialize() {
 					, new google.maps.Size(<?php echo $element['iconSize'][0].','.$element['iconSize'][1]; ?>)
 					, new google.maps.Point(0,0)
 					, new google.maps.Point(<?php echo $element['iconAnchor'][0].','.$element['iconAnchor'][1]; ?>)
-					, new google.maps.Size(<?php echo $element['iconSize'][0].','.$element['iconSize'][1]; ?>)
-					)
+					, new google.maps.Size(<?php echo $element['iconSize'][0].','.$element['iconSize'][1]; ?>))
 				<?php endif; ?>
 				<?php if($element['shadowSRC'] && $element['shadowSize'][0] && $element['shadowSize'][1]) : ?>
 				, shadow: new google.maps.MarkerImage(
@@ -94,8 +91,7 @@ function gmap<?php echo $this->map['id']; ?>_initialize() {
 					, new google.maps.Size(<?php echo $element['shadowSize'][0].','.$element['shadowSize'][1]; ?>)
 					, new google.maps.Point(0,0)
 					, new google.maps.Point(<?php echo $element['iconAnchor'][0].','.$element['iconAnchor'][1]; ?>)
-					, new google.maps.Size(<?php echo $element['shadowSize'][0].','.$element['shadowSize'][1]; ?>)
-					)
+					, new google.maps.Size(<?php echo $element['shadowSize'][0].','.$element['shadowSize'][1]; ?>))
 				<?php endif; ?> 
 			<?php endif; ?>
 			<?php if($element['markerAction'] == 'LINK' && $element['linkTitle']) : ?>
@@ -123,10 +119,10 @@ function gmap<?php echo $this->map['id']; ?>_initialize() {
 				pixelOffset: new google.maps.Size(<?php echo $element['infoWindowAnchor'][0].','.$element['infoWindowAnchor'][1]; ?>),
 				<?php endif; ?>
 				content: '<?php echo $element['infoWindow'].$routingLink; ?>'
-				});
+			});
 			google.maps.event.addListener(gmap<?php echo $element['id']; ?>_marker, 'click', function() {
 				gmap<?php echo $element['id']; ?>_infowindow.open(gmap<?php echo $this->map['id']; ?>);
-				});
+			});
 			<?php if($element['popupInfoWindow']) : ?>
 				gmap<?php echo $element['id']; ?>_infowindow.open(gmap<?php echo $this->map['id']; ?>);
 			<?php endif; ?>
@@ -137,10 +133,10 @@ function gmap<?php echo $this->map['id']; ?>_initialize() {
 				<?php else :?>
 				window.location.href='<?php echo $element['url']; ?>';
 				<?php endif; ?>
-				});
+			});
 		<?php endif; ?>
 		<?php if ($element['parameter']) : ?>
-			<?php echo $element['parameter']; ?>
+		<?php echo $element['parameter']; ?>
 		<?php endif; ?>
 		<?php endif; ?>
 		<?php break; ?>
@@ -159,11 +155,11 @@ function gmap<?php echo $this->map['id']; ?>_calcRoute(fromAddress) {
     	origin: fromAddress,
     	destination: destAddress,
     	travelMode: google.maps.TravelMode.DRIVING };
-  	gmap_<?php echo $this->map['id']; ?>_directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      	gmap_<?php echo $this->map['id']; ?>_directionsDisplay.setDirections(response);
-    }
-  });
+		gmap<?php echo $this->map['id']; ?>_directionsService.route(request, function(response, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			gmap<?php echo $this->map['id']; ?>_directionsDisplay.setDirections(response);
+		}
+	});
 }
 
 window.setTimeout("gmap<?php echo $this->map['id']; ?>_initialize()", 500);
